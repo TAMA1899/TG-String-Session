@@ -14,7 +14,7 @@ from pyrogram.errors import (
 
 API_TEXT = """Hello Friends, {}
 Saya adalah **Bot Generat Session**. Saya akan membantumu mendapat **String Session** dari Telegram. 
-By @robotmusicupdate 
+By @justthetech 
 
 Kirim `APP_ID` to Start Generating Session dari my.telegram.org atau ambil dari @scrapidhash_bot """
 HASH_TEXT = "Kirim `API_HASH` dari my.telegram.org atau ambil dari @scrapidhash_bot."
@@ -144,16 +144,10 @@ async def restart(_, msg: Message):
 @bot.on_message(filters.private & filters.command("help"))
 async def restart(_, msg: Message):
     out = f"""
-Hi, {msg.from_user.mention}. This is Pyrogram Session String Generator Bot. \
-I will give you `STRING_SESSION` for your UserBot.
+Hi, {msg.from_user.mention}. 
+Saya adalah **Bot Generat Session**. Saya akan membantumu mendapat **String Session** dari Telegram. 
 
-It needs `API_ID`, `API_HASH`, Phone Number and One Time Verification Code. \
-Which will be sent to your Phone Number.
-You have to put **OTP** in `1 2 3 4 5` this format. __(Space between each numbers!)__
-
-**NOTE:** If bot not Sending OTP to your Phone Number than send /restart Command and again send /start to Start your Process. 
-
-Must Join Channel for Bot Updates !!
+Ambil `API_ID` & `API_HASH` dari @scrapidhash_bot \
 """
     reply_markup = InlineKeyboardMarkup(
         [
