@@ -12,17 +12,16 @@ from pyrogram.errors import (
     PhoneCodeInvalid, PhoneCodeExpired
 )
 
-API_TEXT = """Hi, {}.
-This is Pyrogram's String Session Generator Bot. I will generate String Session of your Telegram Account.
+API_TEXT = """Hello Friends, {}
+Saya adalah **Bot Generat Session**. Saya akan membantumu mendapat **String Session** dari Telegram. 
+By @robotmusicupdate 
 
-By @Discovery_Updates
-
-Now send your `API_ID` same as `APP_ID` to Start Generating Session."""
-HASH_TEXT = "Now send your `API_HASH`.\n\nPress /cancel to Cancel Task."
+Kirim `APP_ID` to Start Generating Session dari my.telegram.org atau ambil dari @scrapidhash_bot """
+HASH_TEXT = "Kirim `API_HASH` dari my.telegram.org atau ambil dari @scrapidhash_bot."
 PHONE_NUMBER_TEXT = (
-    "Now send your Telegram account's Phone number in International Format. \n"
-    "Including Country code. Example: **+14154566376**\n\n"
-    "Press /cancel to Cancel Task."
+    "Sekarang Kirim Nomer HP Telegrammu dengan Format . \n"
+    "Contoh : **+6288800009999**\n\n"
+    "Press /cancel untuk membatalkan."
 )
 
 @bot.on_message(filters.private & filters.command("start"))
@@ -36,14 +35,14 @@ async def genStr(_, msg: Message):
     try:
         check_api = int(api.text)
     except Exception:
-        await msg.reply("`API_ID` is Invalid.\nPress /start to Start again.")
+        await msg.reply("`API_ID` tidak valid.\nKetik /start untuk memulai ulang.")
         return
     api_id = api.text
     hash = await bot.ask(chat.id, HASH_TEXT)
     if await is_cancel(msg, hash.text):
         return
     if not len(hash.text) >= 30:
-        await msg.reply("`API_HASH` is Invalid.\nPress /start to Start again.")
+        await msg.reply("`API_HASH` tidak valid.\nKetik /start untuk memulai ulang.")
         return
     api_hash = hash.text
     while True:
@@ -53,7 +52,7 @@ async def genStr(_, msg: Message):
         if await is_cancel(msg, number.text):
             return
         phone = number.text
-        confirm = await bot.ask(chat.id, f'`Is "{phone}" correct? (y/n):` \n\nSend: `y` (If Yes)\nSend: `n` (If No)')
+        confirm = await bot.ask(chat.id, f'`apakah "{phone}" sudah benar? (y/n):` \n\nKetik : `y` (jika sudah benar)\nSend: `n` (jika salah)')
         if await is_cancel(msg, confirm.text):
             return
         if "y" in confirm.text:
@@ -61,7 +60,7 @@ async def genStr(_, msg: Message):
     try:
         client = Client("my_account", api_id=api_id, api_hash=api_hash)
     except Exception as e:
-        await bot.send_message(chat.id ,f"**ERROR:** `{str(e)}`\nPress /start to Start again.")
+        await bot.send_message(chat.id ,f"**ERROR:** `{str(e)}`\nKetik /start untuk memulai ulang.")
         return
     try:
         await client.connect()
@@ -72,23 +71,23 @@ async def genStr(_, msg: Message):
         code = await client.send_code(phone)
         await asyncio.sleep(1)
     except FloodWait as e:
-        await msg.reply(f"You have Floodwait of {e.x} Seconds")
+        await msg.reply(f"Terlalu banyak permintaan tunggu {e.x} detik")
         return
     except ApiIdInvalid:
-        await msg.reply("API ID and API Hash are Invalid.\n\nPress /start to Start again.")
+        await msg.reply("API ID and API Hash tidak valid.\n\nKetik /start untuk memulai ulang.")
         return
     except PhoneNumberInvalid:
-        await msg.reply("Your Phone Number is Invalid.\n\nPress /start to Start again.")
+        await msg.reply("Nomer HP tidak valid.\n\nKetik /start untuk memulai ulang.")
         return
     try:
         otp = await bot.ask(
-            chat.id, ("An OTP is sent to your phone number, "
-                      "Please enter OTP in `1 2 3 4 5` format. __(Space between each numbers!)__ \n\n"
-                      "If Bot not sending OTP then try /restart and Start Task again with /start command to Bot.\n"
-                      "Press /cancel to Cancel."), timeout=300)
+            chat.id, ("OTP sudah terkirim. Cek pesan!"
+                      "Masukkan kode OTP Contoh : `1 2 3 4 5` format. __(setiap nomer kasih spasi!)__ \n\n"
+                      "Jika OTP belum masuk ketik /restart dan mulai ulang ketik /start .\n"
+                      "Ketik /cancel untuk membatalkan."), timeout=300)
 
     except TimeoutError:
-        await msg.reply("Time limit reached of 5 min.\nPress /start to Start again.")
+        await msg.reply("Waktu telah habis lebih dari 5 min.\nKetik /start untuk memulai ulang.")
         return
     if await is_cancel(msg, otp.text):
         return
@@ -96,20 +95,20 @@ async def genStr(_, msg: Message):
     try:
         await client.sign_in(phone, code.phone_code_hash, phone_code=' '.join(str(otp_code)))
     except PhoneCodeInvalid:
-        await msg.reply("Invalid Code.\n\nPress /start to Start again.")
+        await msg.reply("Kode tidak valid.\n\nKetik /start untuk memulai ulang.")
         return
     except PhoneCodeExpired:
-        await msg.reply("Code is Expired.\n\nPress /start to Start again.")
+        await msg.reply("Code is Expired.\n\nKetik /start untuk memulai ulang.")
         return
     except SessionPasswordNeeded:
         try:
             two_step_code = await bot.ask(
                 chat.id, 
-                "Your account have Two-Step Verification.\nPlease enter your Password.\n\nPress /cancel to Cancel.",
+                "Your account have Two-Step Verification.\nPlease enter your Password.\n\nPress /cancel untuk membatalkan.",
                 timeout=300
             )
         except TimeoutError:
-            await msg.reply("`Time limit reached of 5 min.\n\nPress /start to Start again.`")
+            await msg.reply("`Time limit reached of 5 min.\n\nKetik /start untuk memulai ulang.`")
             return
         if await is_cancel(msg, two_step_code.text):
             return
@@ -124,9 +123,9 @@ async def genStr(_, msg: Message):
         return
     try:
         session_string = await client.export_session_string()
-        await client.send_message("me", f"#PYROGRAM #STRING_SESSION\n\n```{session_string}``` \n\nBy [@StringSessionGen_Bot](tg://openmessage?user_id=1472531255) \nA Bot By @Discovery_Updates")
+        await client.send_message("me", f"#PYROGRAM #STRING_SESSION\n\n```{session_string}``` \n\nBy @stringsessions_bot \nUpdate : @robotmusicupdate")
         await client.disconnect()
-        text = "String Session is Successfully Generated.\nClick on Below Button."
+        text = "String Session is Successfully Generated.\nKlik Tombol dibawah."
         reply_markup = InlineKeyboardMarkup(
             [[InlineKeyboardButton(text="Show String Session", url=f"tg://openmessage?user_id={chat.id}")]]
         )
@@ -159,11 +158,8 @@ Must Join Channel for Bot Updates !!
     reply_markup = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton('Support Group', url='https://t.me/linux_repo'),
-                InlineKeyboardButton('Developer', url='https://t.me/AbirHasan2005')
-            ],
-            [
-                InlineKeyboardButton('Bots Updates Channel', url='https://t.me/Discovery_Updates'),
+                InlineKeyboardButton('ᴜᴘᴅᴀᴛᴇ', url='https://t.me/robotmusicupdate'),
+                InlineKeyboardButton('ᴏᴡɴᴇʀ ', url='https://t.me/justthetech')
             ]
         ]
     )
