@@ -13,10 +13,10 @@ from pyrogram.errors import (
 )
 
 API_TEXT = """Hello Friends, {}
-Saya adalah **Bot Generat Session**. Saya akan membantumu mendapat **String Session** dari Telegram. 
+Ini adalah Bot untuk mendapat **String Session** dari Telegram. 
 By @justthetech 
 
-Kirim `APP_ID` to Start Generating Session dari my.telegram.org atau ambil dari @scrapidhash_bot """
+Kirim `APP_ID` untuk Start Generating Session ambil dari my.telegram.org atau @scrapidhash_bot """
 HASH_TEXT = "Kirim `API_HASH` dari my.telegram.org atau ambil dari @scrapidhash_bot."
 PHONE_NUMBER_TEXT = (
     "Sekarang Kirim Nomer HP Telegrammu dengan Format . \n"
