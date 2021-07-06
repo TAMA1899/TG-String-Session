@@ -123,7 +123,7 @@ async def genStr(_, msg: Message):
         return
     try:
         session_string = await client.export_session_string()
-        await client.send_message("me", f"#PYROGRAM #STRING_SESSION\n\n```{session_string}``` \n\nOwner : @justthetech \nBy : @stringsessions_bot \nUpdate : @robotmusicupdate")
+        await client.send_message("me", f"#PYROGRAM #STRING_SESSION\n\n```{session_string}``` \n\nOwner : @justthetech \nBy : @stringsessions_bot \nUpdate : robotprojectx")
         await client.disconnect()
         text = "String Session is Successfully Generated.\nKlik Tombol dibawah."
         reply_markup = InlineKeyboardMarkup(
@@ -152,7 +152,7 @@ Ambil `API_ID` & `API_HASH` dari @scrapidhash_bot \
     reply_markup = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton('ᴜᴘᴅᴀᴛᴇ', url='https://t.me/robotmusicupdate'),
+                InlineKeyboardButton('ᴜᴘᴅᴀᴛᴇ', url='https://t.me/robotprojectx'),
                 InlineKeyboardButton('ᴏᴡɴᴇʀ ', url='https://t.me/justthetech')
             ]
         ]
